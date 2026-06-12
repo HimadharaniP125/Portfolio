@@ -1,0 +1,6 @@
+# Ignore root-level generated files and local dependencies
+node_modules
+package-lock.json
+package.json
+.DS_Store
+.vscode/
