@@ -256,7 +256,7 @@ export default function Portfolio() {
       <section id="about" className="section-padding bg-transparent">
         <div className="container text-start">
           <div className="section-title-container">
-            <span className="section-subtitle">Biography</span>
+          
             <h2 className="section-title">About Me</h2>
           </div>
 
@@ -311,8 +311,7 @@ export default function Portfolio() {
       <section id="skills" className="section-padding bg-transparent" style={{ borderTop: '1px solid var(--border-color)' }}>
         <div className="container">
           <div className="section-title-container">
-            <span className="section-subtitle">Proficiencies</span>
-            <h2 className="section-title">My Skills</h2>
+         <h2 className="section-title">My Skills</h2>
           </div>
 
           <div className="row g-4">
@@ -338,7 +337,7 @@ export default function Portfolio() {
       <section id="projects" className="section-padding bg-transparent" style={{ borderTop: '1px solid var(--border-color)' }}>
         <div className="container text-start">
             <div className="section-title-container">
-              <span className="section-subtitle">Portfolio Showcases</span>
+      
               <h2 className="section-title">Academic & Personal Projects</h2>
             </div>
 
@@ -382,7 +381,7 @@ export default function Portfolio() {
       <section id="certifications" className="section-padding bg-transparent" style={{ borderTop: '1px solid var(--border-color)' }}>
         <div className="container text-start">
           <div className="section-title-container">
-            <span className="section-subtitle">Credentials</span>
+          
             <h2 className="section-title">Certifications</h2>
           </div>
 
@@ -409,7 +408,7 @@ export default function Portfolio() {
       <section id="contact" className="section-padding bg-transparent" style={{ borderTop: '1px solid var(--border-color)' }}>
         <div className="container text-start">
           <div className="section-title-container">
-            <span className="section-subtitle">Get In Touch</span>
+    
             <h2 className="section-title">Contact Information</h2>
           </div>
 
