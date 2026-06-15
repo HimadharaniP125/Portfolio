@@ -13,39 +13,39 @@
   --text-primary: #0f172a;
   --text-secondary: #475569;
   --text-muted: #64748b;
-  --accent-primary: #4f46e5;
-  --accent-secondary: #7c3aed;
-  --accent-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-  --accent-gradient-hover: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
-  --border-color: #e2e8f0;
-  --card-shadow: 0 10px 30px -10px rgba(79, 70, 229, 0.06), 0 1px 3px rgba(0, 0, 0, 0.02);
-  --card-hover-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.15);
+  --accent-primary: #d9480f; /* dark orange */
+  --accent-secondary: #fb923c; /* warm orange */
+  --accent-gradient: linear-gradient(135deg, #d9480f 0%, #fb923c 100%);
+  --accent-gradient-hover: linear-gradient(135deg, #c2410c 0%, #f97316 100%);
+  --border-color: #e9e2dd;
+  --card-shadow: 0 10px 30px -10px rgba(217, 72, 15, 0.06), 0 1px 3px rgba(0, 0, 0, 0.02);
+  --card-hover-shadow: 0 20px 40px -15px rgba(217, 72, 15, 0.15);
   --glass-bg: rgba(255, 255, 255, 0.75);
   --glass-border: rgba(255, 255, 255, 0.4);
-  --glow-color: rgba(79, 70, 229, 0.1);
+  --glow-color: rgba(217, 72, 15, 0.12);
   --timeline-line: #cbd5e1;
   --header-height: 70px;
 }
 
 [data-theme='dark'] {
   /* Color Palette - Dark Mode (Premium Dark Space) */
-  --bg-primary: #090a0f;
-  --bg-secondary: #11121d;
-  --bg-tertiary: #191b2b;
-  --text-primary: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --text-muted: #94a3b8;
-  --accent-primary: #818cf8;
-  --accent-secondary: #a78bfa;
-  --accent-gradient: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
-  --accent-gradient-hover: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  --border-color: #202232;
-  --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
-  --card-hover-shadow: 0 20px 40px -15px rgba(129, 140, 248, 0.25);
-  --glass-bg: rgba(17, 18, 29, 0.8);
-  --glass-border: rgba(255, 255, 255, 0.06);
-  --glow-color: rgba(129, 140, 248, 0.2);
-  --timeline-line: #334155;
+  --bg-primary: #070605;
+  --bg-secondary: #0f0d0b;
+  --bg-tertiary: #12100f;
+  --text-primary: #f8f6f2;
+  --text-secondary: #dacfc6;
+  --text-muted: #bfb6ae;
+  --accent-primary: #ff7a18; /* brighter orange for contrast */
+  --accent-secondary: #ffb380;
+  --accent-gradient: linear-gradient(135deg, #ff7a18 0%, #ffb380 100%);
+  --accent-gradient-hover: linear-gradient(135deg, #ff6a00 0%, #ff9a3a 100%);
+  --border-color: #201912;
+  --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+  --card-hover-shadow: 0 20px 40px -15px rgba(217, 72, 15, 0.25);
+  --glass-bg: rgba(16, 14, 13, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.03);
+  --glow-color: rgba(255, 122, 24, 0.14);
+  --timeline-line: #2b241f;
 }
 
 * {
@@ -103,4 +103,12 @@ p {
 /* Transitions */
 .theme-transition {
   transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Ensure Bootstrap utility classes respect theme variables */
+.text-muted {
+  color: var(--text-muted) !important;
+}
+.text-primary-custom {
+  color: var(--text-primary) !important;
 }

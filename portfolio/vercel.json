@@ -1,0 +1,14 @@
+{
+  "buildCommand": "npm run prisma:generate && npm run build",
+  "outputDirectory": "dist",
+  "envPrefix": "REACT_APP_",
+  "env": {
+    "DATABASE_URL": "@database_url"
+  },
+  "functions": {
+    "api/**/*.js": {
+      "memory": 1024,
+      "maxDuration": 30
+    }
+  }
+}

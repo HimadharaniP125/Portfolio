@@ -18,7 +18,7 @@
   left: 10%;
   width: 350px;
   height: 350px;
-  background: radial-gradient(circle, rgba(79, 70, 229, 0.15) 0%, rgba(124, 58, 237, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
+  background: radial-gradient(circle, rgba(217, 72, 15, 0.15) 0%, rgba(251, 146, 60, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
   filter: blur(80px);
   border-radius: 50%;
   animation: float-blob 20s infinite alternate ease-in-out;
@@ -30,18 +30,18 @@
   right: 10%;
   width: 450px;
   height: 450px;
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, rgba(79, 70, 229, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
+  background: radial-gradient(circle, rgba(251, 146, 60, 0.15) 0%, rgba(217, 72, 15, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
   filter: blur(100px);
   border-radius: 50%;
   animation: float-blob 25s infinite alternate-reverse ease-in-out;
 }
 
 [data-theme='dark'] .bg-glow-1 {
-  background: radial-gradient(circle, rgba(129, 140, 248, 0.12) 0%, rgba(167, 139, 250, 0.04) 60%, rgba(0, 0, 0, 0) 100%);
+  background: radial-gradient(circle, rgba(255, 122, 24, 0.12) 0%, rgba(255, 179, 128, 0.04) 60%, rgba(0, 0, 0, 0) 100%);
 }
 
 [data-theme='dark'] .bg-glow-2 {
-  background: radial-gradient(circle, rgba(167, 139, 250, 0.12) 0%, rgba(129, 140, 248, 0.04) 60%, rgba(0, 0, 0, 0) 100%);
+  background: radial-gradient(circle, rgba(255, 179, 128, 0.12) 0%, rgba(255, 122, 24, 0.04) 60%, rgba(0, 0, 0, 0) 100%);
 }
 
 @keyframes float-blob {
@@ -76,6 +76,7 @@
   font-weight: 800;
   font-size: 1.4rem;
   background: var(--accent-gradient);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-decoration: none;
@@ -227,6 +228,7 @@
 
 .hero-title-gradient {
   background: var(--accent-gradient);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -263,7 +265,7 @@
   color: #ffffff !important;
   border-color: transparent;
   transform: translateY(-4px) scale(1.1);
-  box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 10px 20px rgba(255, 122, 24, 0.3);
 }
 
 .hero-buttons {
@@ -285,13 +287,13 @@
   align-items: center;
   gap: 0.5rem;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 24px rgba(79, 70, 229, 0.25);
+  box-shadow: 0 8px 24px rgba(217, 72, 15, 0.25);
 }
 
 .btn-gradient:hover {
   background: var(--accent-gradient-hover);
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(79, 70, 229, 0.35);
+  box-shadow: 0 12px 28px rgba(217, 72, 15, 0.35);
 }
 
 .btn-outline-custom {
@@ -312,7 +314,7 @@
   border-color: var(--accent-primary);
   color: var(--accent-primary) !important;
   transform: translateY(-2px);
-  background: rgba(79, 70, 229, 0.05);
+  background: rgba(217, 72, 15, 0.04);
 }
 
 .hero-img-container {
@@ -362,7 +364,7 @@
   justify-content: center;
   margin-bottom: 1.5rem;
   color: var(--accent-primary);
-  box-shadow: 0 10px 20px rgba(79, 70, 229, 0.15);
+  box-shadow: 0 10px 20px rgba(217, 72, 15, 0.15);
 }
 
 .floating-badge {
@@ -504,7 +506,7 @@
 
 .project-card-image-placeholder {
   height: 180px;
-  background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+  background: linear-gradient(135deg, rgba(217, 72, 15, 0.08) 0%, rgba(251, 146, 60, 0.08) 100%);
   position: relative;
   display: flex;
   align-items: center;
@@ -515,7 +517,7 @@
 }
 
 .project-card:hover .project-card-image-placeholder {
-  background: linear-gradient(135deg, rgba(79, 70, 229, 0.15) 0%, rgba(124, 58, 237, 0.15) 100%);
+  background: linear-gradient(135deg, rgba(217, 72, 15, 0.12) 0%, rgba(251, 146, 60, 0.12) 100%);
 }
 
 .project-metrics-badge {
@@ -528,7 +530,7 @@
   font-size: 0.75rem;
   padding: 0.35rem 0.8rem;
   border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+  box-shadow: 0 4px 12px rgba(217, 72, 15, 0.18);
 }
 
 .project-card-body {

@@ -62,6 +62,24 @@ export default function Portfolio() {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
+  // Initialize theme from localStorage or system preference on mount
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('theme');
+      if (saved) {
+        setTheme(saved);
+        return;
+      }
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        setTheme('dark');
+      } else {
+        setTheme('light');
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       const sections = ['home', 'about', 'skills', 'projects', 'certifications', 'contact'];
@@ -88,14 +106,33 @@ export default function Portfolio() {
     setTheme(prev => prev === 'light' ? 'dark' : 'light');
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    if (formData.name && formData.email && formData.message) {
+    if (!formData.name || !formData.email || !formData.message) {
+      alert('Please fill in all fields');
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/contacts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        alert(`Error: ${result.error || 'Failed to send message'}`);
+        return;
+      }
+
       setFormSubmitted(true);
-      setTimeout(() => {
-        setFormSubmitted(false);
-        setFormData({ name: '', email: '', message: '' });
-      }, 5000);
+      setFormData({ name: '', email: '', message: '' });
+      setTimeout(() => setFormSubmitted(false), 5000);
+    } catch (err) {
+      console.error('Form submission error:', err);
+      alert('Network error. Please try again.');
     }
   };
 
