@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { 
-  Terminal, Globe, Cpu, Eye, CheckSquare, Layers, 
-  GitBranch, FileText, Mail, Phone, MapPin, 
-  ExternalLink, Sun, Moon, ArrowUpRight, 
+import {
+  Terminal, Globe, Cpu, Eye, CheckSquare, Layers,
+  GitBranch, FileText, Mail, Phone, MapPin,
+  ExternalLink, Sun, Moon, ArrowUpRight,
   Award, GraduationCap, Code, CheckCircle, Send
 } from 'lucide-react';
 import './Portfolio.css';
@@ -52,6 +52,57 @@ export default function Portfolio() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [formSubmitted, setFormSubmitted] = useState(false);
 
+  const [selectedSkillCategory, setSelectedSkillCategory] = useState('all');
+
+  // Number Guessing Game state
+  const [isPlayingGame, setIsPlayingGame] = useState(false);
+  const [targetNumber, setTargetNumber] = useState(0);
+  const [guess, setGuess] = useState('');
+  const [guessesCount, setGuessesCount] = useState(0);
+  const [gameFeedback, setGameFeedback] = useState('');
+  const [gameHistory, setGameHistory] = useState([]);
+  const [gameWon, setGameWon] = useState(false);
+
+  const startGame = () => {
+    setTargetNumber(Math.floor(Math.random() * 100) + 1);
+    setGuess('');
+    setGuessesCount(0);
+    setGameFeedback('I have chosen a number between 1 and 100. Start guessing!');
+    setGameHistory([]);
+    setGameWon(false);
+    setIsPlayingGame(true);
+  };
+
+  const handleGuessSubmit = (e) => {
+    e.preventDefault();
+    const numericGuess = parseInt(guess);
+    if (isNaN(numericGuess) || numericGuess < 1 || numericGuess > 100) {
+      alert('Please enter a valid number between 1 and 100.');
+      return;
+    }
+
+    const nextGuessesCount = guessesCount + 1;
+    setGuessesCount(nextGuessesCount);
+
+    let feedback = '';
+
+    if (numericGuess === targetNumber) {
+      feedback = `Correct! You guessed it in ${nextGuessesCount} tries! 🎉`;
+      setGameWon(true);
+    } else if (numericGuess < targetNumber) {
+      feedback = 'Too low! Try a higher number.';
+    } else {
+      feedback = 'Too high! Try a lower number.';
+    }
+
+    setGameFeedback(feedback);
+    setGameHistory(prev => [
+      { guess: numericGuess, result: numericGuess === targetNumber ? 'Correct' : numericGuess < targetNumber ? 'Low' : 'High' },
+      ...prev
+    ]);
+    setGuess('');
+  };
+
   useEffect(() => {
     const root = document.documentElement;
     if (theme === 'dark') {
@@ -62,9 +113,27 @@ export default function Portfolio() {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
+  // Initialize theme from localStorage or system preference on mount
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('theme');
+      if (saved) {
+        setTheme(saved);
+        return;
+      }
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        setTheme('dark');
+      } else {
+        setTheme('light');
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'skills', 'projects', 'certifications', 'contact'];
+      const sections = ['home', 'about', 'skills', 'projects', 'certifications', 'experience', 'contact'];
       const scrollPosition = window.scrollY + 200;
 
       for (const section of sections) {
@@ -88,28 +157,51 @@ export default function Portfolio() {
     setTheme(prev => prev === 'light' ? 'dark' : 'light');
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    if (formData.name && formData.email && formData.message) {
+    if (!formData.name || !formData.email || !formData.message) {
+      alert('Please fill in all fields');
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/contacts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        alert(`Error: ${result.error || 'Failed to send message'}`);
+        return;
+      }
+
       setFormSubmitted(true);
-      setTimeout(() => {
-        setFormSubmitted(false);
-        setFormData({ name: '', email: '', message: '' });
-      }, 5000);
+      setFormData({ name: '', email: '', message: '' });
+      setTimeout(() => setFormSubmitted(false), 5000);
+    } catch (err) {
+      console.error('Form submission error:', err);
+      alert('Network error. Please try again.');
     }
   };
 
   const skillsData = [
-    { name: 'Python', desc: 'Object-Oriented Programming, Automation Scripting & Algorithms', icon: Terminal },
-    { name: 'HTML', desc: 'Semantic layout, structuring web pages & document models', icon: Globe },
-    { name: 'React.js (Basics)', desc: 'Component architectures, state management & user interfaces', icon: Cpu },
-    { name: 'Selenium', desc: 'Web automation testing, locators, dynamic element handling', icon: Eye },
-    { name: 'Software Testing', desc: 'Manual & automation testing, regression, test case design', icon: CheckSquare },
-    { name: 'Jira', desc: 'Agile project tracking, issue reporting & sprint management', icon: Layers },
-    { name: 'Git', desc: 'Distributed version control, local staging, branching workflows', icon: GitBranch },
-    { name: 'GitHub', desc: 'Cloud collaboration, code reviews, pull request workflows', icon: GithubIcon },
-    { name: 'Microsoft Office', desc: 'Analytical reporting, spreadsheet tracking, project notes', icon: FileText }
+    { name: 'Python', desc: 'Object-Oriented Programming, Automation Scripting & Algorithms', icon: Terminal, category: 'development' },
+    { name: 'HTML', desc: 'Semantic layout, structuring web pages & document models', icon: Globe, category: 'development' },
+    { name: 'React.js (Basics)', desc: 'Component architectures, state management & user interfaces', icon: Cpu, category: 'development' },
+    { name: 'Selenium', desc: 'Web automation testing, locators, dynamic element handling', icon: Eye, category: 'testing' },
+    { name: 'Software Testing', desc: 'Manual & automation testing, regression, test case design', icon: CheckSquare, category: 'testing' },
+    { name: 'Jira', desc: 'Agile project tracking, issue reporting & sprint management', icon: Layers, category: 'tools' },
+    { name: 'Git', desc: 'Distributed version control, local staging, branching workflows', icon: GitBranch, category: 'tools' },
+    { name: 'GitHub', desc: 'Cloud collaboration, code reviews, pull request workflows', icon: GithubIcon, category: 'tools' },
+    { name: 'Microsoft Office', desc: 'Analytical reporting, spreadsheet tracking, project notes', icon: FileText, category: 'tools' }
   ];
+
+  const filteredSkills = skillsData.filter(
+    (skill) => selectedSkillCategory === 'all' || skill.category === selectedSkillCategory
+  );
 
   const projectsData = [
     {
@@ -151,6 +243,20 @@ export default function Portfolio() {
     }
   ];
 
+  const experienceData = [
+    {
+      role: 'Frontend Developer Trainee',
+      company: 'Shraddha Infotech Solutions',
+      period: 'Feb 2026 – Present',
+      highlights: [
+        'Currently training in frontend development, building hands-on proficiency in React.js, HTML/CSS, Tailwind css  and JavaScript through guided projects and exercises.',
+        'Practicing component-based UI development and responsive page layouts under mentorship, applying core web development concepts in a real-world training environment.',
+        'Strengthening foundational frontend skills to complement existing Python and software testing background.'
+      ],
+      tags: ['React.js', 'HTML/CSS', 'JavaScript', 'Responsive Design']
+    }
+  ];
+
   return (
     <div className="theme-transition">
       {/* Glow Backdrops */}
@@ -163,20 +269,20 @@ export default function Portfolio() {
       <nav className="navbar navbar-expand-lg navbar-custom">
         <div className="container">
           <a className="navbar-brand-custom" href="#home">PH.</a>
-          
-          <button 
-            className="navbar-toggler" 
-            type="button" 
-            data-bs-toggle="collapse" 
-            data-bs-target="#navbarNav" 
-            aria-controls="navbarNav" 
-            aria-expanded="false" 
+
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
             aria-label="Toggle navigation"
             style={{ border: 'none', padding: '0.25rem' }}
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          
+
           <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
             <div className="navbar-nav align-items-center gap-3 mt-3 mt-lg-0">
               <a className={`nav-link-custom ${activeSection === 'home' ? 'active' : ''}`} href="#home">Home</a>
@@ -184,11 +290,12 @@ export default function Portfolio() {
               <a className={`nav-link-custom ${activeSection === 'skills' ? 'active' : ''}`} href="#skills">Skills</a>
               <a className={`nav-link-custom ${activeSection === 'projects' ? 'active' : ''}`} href="#projects">Projects</a>
               <a className={`nav-link-custom ${activeSection === 'certifications' ? 'active' : ''}`} href="#certifications">Certifications</a>
+              <a className={`nav-link-custom ${activeSection === 'experience' ? 'active' : ''}`} href="#experience">Experience</a>
               <a className={`nav-link-custom ${activeSection === 'contact' ? 'active' : ''}`} href="#contact">Contact</a>
-              
-              <button 
-                onClick={toggleTheme} 
-                className="btn-theme-toggle ms-lg-2 mt-2 mt-lg-0" 
+
+              <button
+                onClick={toggleTheme}
+                className="btn-theme-toggle ms-lg-2 mt-2 mt-lg-0"
                 aria-label="Toggle theme"
               >
                 {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
@@ -214,7 +321,7 @@ export default function Portfolio() {
               <p className="hero-summary">
                 A detail-oriented and motivated B.Tech graduate with a strong foundation in software engineering, testing, and automation. Experienced in building automation test suites with Selenium and Python, analyzing requirements using Jira, and collaborating with Git/GitHub.
               </p>
-              
+
               <div className="hero-buttons">
                 <a href="#contact" className="btn-gradient">
                   Get In Touch <ArrowUpRight size={18} />
@@ -256,7 +363,7 @@ export default function Portfolio() {
       <section id="about" className="section-padding bg-transparent">
         <div className="container text-start">
           <div className="section-title-container">
-          
+
             <h2 className="section-title">About Me</h2>
           </div>
 
@@ -270,7 +377,7 @@ export default function Portfolio() {
                 <p className="mb-4">
                   I enjoy solving complex problems through structural logic and writing clean automated test pipelines. I am highly collaborative, value version control integrity, and look forward to partnering with agile teams to build solid software solutions.
                 </p>
-                
+
                 <div className="about-stats">
                   <div className="stat-item">
                     <div className="stat-number">7.70</div>
@@ -311,7 +418,7 @@ export default function Portfolio() {
       <section id="skills" className="section-padding bg-transparent" style={{ borderTop: '1px solid var(--border-color)' }}>
         <div className="container">
           <div className="section-title-container">
-         <h2 className="section-title">My Skills</h2>
+            <h2 className="section-title">My Skills</h2>
           </div>
 
           <div className="row g-4">
@@ -336,10 +443,10 @@ export default function Portfolio() {
       {/* Projects Section */}
       <section id="projects" className="section-padding bg-transparent" style={{ borderTop: '1px solid var(--border-color)' }}>
         <div className="container text-start">
-            <div className="section-title-container">
-      
-              <h2 className="section-title">Academic & Personal Projects</h2>
-            </div>
+          <div className="section-title-container">
+
+            <h2 className="section-title">Academic & Personal Projects</h2>
+          </div>
 
           <div className="row g-4">
             {projectsData.map((project, index) => (
@@ -349,21 +456,21 @@ export default function Portfolio() {
                     <Terminal size={48} />
                     <span className="project-metrics-badge">{project.metrics}</span>
                   </div>
-                  
+
                   <div className="project-card-body">
                     <span className="badge mb-2 bg-transparent text-primary border border-primary align-self-start py-1 px-2.5" style={{ fontSize: '0.75rem', borderRadius: '4px' }}>
                       {project.badge}
                     </span>
                     <h3 className="project-title">{project.title}</h3>
                     <p className="project-desc">{project.desc}</p>
-                    
+
                     <h4 className="fs-6 fw-bold mb-2" style={{ color: 'var(--text-primary)' }}>Key Highlights:</h4>
                     <ul className="project-highlights">
                       {project.highlights.map((highlight, idx) => (
                         <li key={idx}>{highlight}</li>
                       ))}
                     </ul>
-                    
+
                     <div className="project-tags mt-auto">
                       {project.tags.map((tag, idx) => (
                         <span key={idx} className="project-tag">{tag}</span>
@@ -381,7 +488,7 @@ export default function Portfolio() {
       <section id="certifications" className="section-padding bg-transparent" style={{ borderTop: '1px solid var(--border-color)' }}>
         <div className="container text-start">
           <div className="section-title-container">
-          
+
             <h2 className="section-title">Certifications</h2>
           </div>
 
@@ -404,11 +511,56 @@ export default function Portfolio() {
         </div>
       </section>
 
+      {/* Experience Section */}
+      <section id="experience" className="section-padding bg-transparent" style={{ borderTop: '1px solid var(--border-color)' }}>
+        <div className="container text-start">
+          <div className="section-title-container">
+            <h2 className="section-title">Experience</h2>
+          </div>
+
+          <div className="row g-4">
+            {experienceData.map((exp, index) => (
+              <div key={index} className="col-12">
+                <div className="glass-card experience-card">
+                  <div className="experience-header">
+                    <div className="experience-header-left">
+                      <div className="experience-icon-wrapper">
+                        <Layers size={28} />
+                      </div>
+                      <div>
+                        <h3 className="experience-role">{exp.role}</h3>
+                        <p className="experience-company">{exp.company}</p>
+                      </div>
+                    </div>
+                    <span className="experience-period">{exp.period}</span>
+                  </div>
+
+                  <ul className="experience-highlights">
+                    {exp.highlights.map((point, idx) => (
+                      <li key={idx}>
+                        <CheckCircle size={15} className="experience-check-icon" />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="project-tags mt-3">
+                    {exp.tags.map((tag, idx) => (
+                      <span key={idx} className="project-tag">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Interactive Contact Form & Footer Section */}
       <section id="contact" className="section-padding bg-transparent" style={{ borderTop: '1px solid var(--border-color)' }}>
         <div className="container text-start">
           <div className="section-title-container">
-    
+
             <h2 className="section-title">Contact Information</h2>
           </div>
 
@@ -457,7 +609,7 @@ export default function Portfolio() {
             <div className="col-lg-7">
               <div className="glass-card">
                 <h3 className="fs-4 fw-bold mb-4" style={{ color: 'var(--text-primary)' }}>Send a Quick Message</h3>
-                
+
                 {formSubmitted ? (
                   <div className="alert alert-success d-flex align-items-center gap-2 py-3" role="alert">
                     <CheckCircle size={20} />
@@ -470,41 +622,41 @@ export default function Portfolio() {
                     <div className="row">
                       <div className="col-md-6 mb-3">
                         <label htmlFor="formName" className="form-label fw-semibold text-primary-custom small">Name</label>
-                        <input 
-                          type="text" 
-                          className="form-control bg-transparent border-color theme-transition text-primary-custom py-2.5" 
-                          id="formName" 
+                        <input
+                          type="text"
+                          className="form-control bg-transparent border-color theme-transition text-primary-custom py-2.5"
+                          id="formName"
                           placeholder="Your Name"
                           required
                           value={formData.name}
-                          onChange={(e) => setFormData({...formData, name: e.target.value})}
+                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                           style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
                         />
                       </div>
                       <div className="col-md-6 mb-3">
                         <label htmlFor="formEmail" className="form-label fw-semibold text-primary-custom small">Email</label>
-                        <input 
-                          type="email" 
-                          className="form-control bg-transparent border-color theme-transition text-primary-custom py-2.5" 
-                          id="formEmail" 
+                        <input
+                          type="email"
+                          className="form-control bg-transparent border-color theme-transition text-primary-custom py-2.5"
+                          id="formEmail"
                           placeholder="name@example.com"
                           required
                           value={formData.email}
-                          onChange={(e) => setFormData({...formData, email: e.target.value})}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
                         />
                       </div>
                     </div>
                     <div className="mb-4">
                       <label htmlFor="formMessage" className="form-label fw-semibold text-primary-custom small">Message</label>
-                      <textarea 
-                        className="form-control bg-transparent border-color theme-transition text-primary-custom py-2.5" 
-                        id="formMessage" 
-                        rows="4" 
+                      <textarea
+                        className="form-control bg-transparent border-color theme-transition text-primary-custom py-2.5"
+                        id="formMessage"
+                        rows="4"
                         placeholder="Hi, I'd love to chat about..."
                         required
                         value={formData.message}
-                        onChange={(e) => setFormData({...formData, message: e.target.value})}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
                       ></textarea>
                     </div>

@@ -1,0 +1,10 @@
+{
+  "buildCommand": "npm run prisma:generate && npm run build",
+  "outputDirectory": "dist",
+  "functions": {
+    "api/**/*.js": {
+      "memory": 1024,
+      "maxDuration": 30
+    }
+  }
+}

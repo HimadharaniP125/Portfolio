@@ -6,46 +6,46 @@
   --font-heading: 'Outfit', sans-serif;
   --font-body: 'Inter', sans-serif;
 
-  /* Color Palette - Light Mode (Premium Violet/Indigo) */
-  --bg-primary: #f8fafc;
+  /* Color Palette - Light Mode (Premium Cream / Amber) */
+  --bg-primary: #faf9f6;
   --bg-secondary: #ffffff;
-  --bg-tertiary: #f1f5f9;
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #64748b;
-  --accent-primary: #4f46e5;
-  --accent-secondary: #7c3aed;
-  --accent-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-  --accent-gradient-hover: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
-  --border-color: #e2e8f0;
-  --card-shadow: 0 10px 30px -10px rgba(79, 70, 229, 0.06), 0 1px 3px rgba(0, 0, 0, 0.02);
-  --card-hover-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.15);
-  --glass-bg: rgba(255, 255, 255, 0.75);
-  --glass-border: rgba(255, 255, 255, 0.4);
-  --glow-color: rgba(79, 70, 229, 0.1);
-  --timeline-line: #cbd5e1;
+  --bg-tertiary: #f4f2ed;
+  --text-primary: #1a1613;
+  --text-secondary: #5c534c;
+  --text-muted: #8c7e74;
+  --accent-primary: #e65c00; /* Rich orange */
+  --accent-secondary: #f9a03f; /* Amber gold */
+  --accent-gradient: linear-gradient(135deg, #e65c00 0%, #f9a03f 100%);
+  --accent-gradient-hover: linear-gradient(135deg, #cc5200 0%, #f78e1e 100%);
+  --border-color: #e5dfd9;
+  --card-shadow: 0 10px 30px -10px rgba(230, 92, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.02);
+  --card-hover-shadow: 0 20px 40px -15px rgba(230, 92, 0, 0.18);
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glow-color: rgba(230, 92, 0, 0.08);
+  --timeline-line: #d5cd65;
   --header-height: 70px;
 }
 
 [data-theme='dark'] {
-  /* Color Palette - Dark Mode (Premium Dark Space) */
-  --bg-primary: #090a0f;
-  --bg-secondary: #11121d;
-  --bg-tertiary: #191b2b;
-  --text-primary: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --text-muted: #94a3b8;
-  --accent-primary: #818cf8;
-  --accent-secondary: #a78bfa;
-  --accent-gradient: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
-  --accent-gradient-hover: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  --border-color: #202232;
-  --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
-  --card-hover-shadow: 0 20px 40px -15px rgba(129, 140, 248, 0.25);
-  --glass-bg: rgba(17, 18, 29, 0.8);
-  --glass-border: rgba(255, 255, 255, 0.06);
-  --glow-color: rgba(129, 140, 248, 0.2);
-  --timeline-line: #334155;
+  /* Color Palette - Dark Mode (Premium Obsidian Orange Space) */
+  --bg-primary: #080605;      /* Deep Obsidian Black */
+  --bg-secondary: #100d0b;    /* Charcoal Obsidian */
+  --bg-tertiary: #16120f;     /* Warm Amber Obsidian */
+  --text-primary: #f5f2eb;    /* Soft Ivory */
+  --text-secondary: #d4c9be;  /* Warm Sand */
+  --text-muted: #a39587;      /* Muted Bronze */
+  --accent-primary: #ff6b00;  /* Bright Neon Amber */
+  --accent-secondary: #ffaa66; /* Warm Honey Gold */
+  --accent-gradient: linear-gradient(135deg, #ff6b00 0%, #ffaa66 100%);
+  --accent-gradient-hover: linear-gradient(135deg, #e66000 0%, #ff9540 100%);
+  --border-color: #231a14;    /* Copper Obsidian Border */
+  --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+  --card-hover-shadow: 0 20px 40px -15px rgba(255, 107, 0, 0.22);
+  --glass-bg: rgba(13, 10, 8, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.04);
+  --glow-color: rgba(255, 107, 0, 0.15);
+  --timeline-line: #2e2219;
 }
 
 * {
@@ -103,4 +103,12 @@ p {
 /* Transitions */
 .theme-transition {
   transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Ensure Bootstrap utility classes respect theme variables */
+.text-muted {
+  color: var(--text-muted) !important;
+}
+.text-primary-custom {
+  color: var(--text-primary) !important;
 }
