@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { addStoredRecord, getStoredRecords } from './_storage.js';
 
 const prisma = new PrismaClient();
 
@@ -24,6 +25,11 @@ export default async function handler(req, res) {
 
   try {
     if (req.method === 'GET') {
+      if (!process.env.DATABASE_URL) {
+        const projects = await getStoredRecords('projects');
+        return res.status(200).json({ success: true, data: projects.slice(0, 100) });
+      }
+
       const projects = await prisma.project.findMany({
         orderBy: { createdAt: 'desc' },
         take: 100
@@ -46,14 +52,15 @@ export default async function handler(req, res) {
         return res.status(400).json({ success: false, error: 'Title is too long' });
       }
 
-      const project = await prisma.project.create({
-        data: {
-          title,
-          description,
-          url: url || null,
-          tags: tags && Array.isArray(tags) ? tags : []
-        }
-      });
+      const projectData = {
+        title,
+        description,
+        url: url || null,
+        tags: tags && Array.isArray(tags) ? tags : []
+      };
+      const project = process.env.DATABASE_URL
+        ? await prisma.project.create({ data: projectData })
+        : await addStoredRecord('projects', projectData);
 
       return res.status(201).json({ success: true, data: project });
     }

@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { addStoredRecord, getStoredRecords } from './_storage.js';
 
 const prisma = new PrismaClient();
 
@@ -24,6 +25,11 @@ export default async function handler(req, res) {
 
   try {
     if (req.method === 'GET') {
+      if (!process.env.DATABASE_URL) {
+        const contacts = await getStoredRecords('contacts');
+        return res.status(200).json({ success: true, data: contacts.slice(0, 100) });
+      }
+
       const contacts = await prisma.contact.findMany({
         orderBy: { createdAt: 'desc' },
         take: 100
@@ -50,9 +56,9 @@ export default async function handler(req, res) {
         return res.status(400).json({ success: false, error: 'Message is too long' });
       }
 
-      const contact = await prisma.contact.create({
-        data: { name, email, message }
-      });
+      const contact = process.env.DATABASE_URL
+        ? await prisma.contact.create({ data: { name, email, message } })
+        : await addStoredRecord('contacts', { name, email, message });
 
       return res.status(201).json({ success: true, data: contact });
     }

@@ -7,6 +7,9 @@ import {
 } from 'lucide-react';
 import './Portfolio.css';
 
+const GITHUB_URL = 'https://github.com/HimadharaniP125';
+const LINKEDIN_URL = 'https://www.linkedin.com/in/pikkili-himadharani/';
+
 // Custom Brand Icons (since brand icons are deprecated/removed in newer Lucide versions)
 const GithubIcon = ({ size = 20, ...props }) => (
   <svg
@@ -191,6 +194,9 @@ export default function Portfolio() {
     { name: 'Python', desc: 'Object-Oriented Programming, Automation Scripting & Algorithms', icon: Terminal, category: 'development' },
     { name: 'HTML', desc: 'Semantic layout, structuring web pages & document models', icon: Globe, category: 'development' },
     { name: 'React.js (Basics)', desc: 'Component architectures, state management & user interfaces', icon: Cpu, category: 'development' },
+    { name: 'Tailwind CSS', desc: 'Utility-first styling, responsive layouts & reusable design patterns', icon: Layers, category: 'development' },
+    { name: 'Responsive Design', desc: 'Adaptive layouts and accessible interfaces across screen sizes', icon: Globe, category: 'development' },
+    { name: 'UI Development', desc: 'Interactive, user-focused interfaces built with modern web technologies', icon: Code, category: 'development' },
     { name: 'Selenium', desc: 'Web automation testing, locators, dynamic element handling', icon: Eye, category: 'testing' },
     { name: 'Software Testing', desc: 'Manual & automation testing, regression, test case design', icon: CheckSquare, category: 'testing' },
     { name: 'Jira', desc: 'Agile project tracking, issue reporting & sprint management', icon: Layers, category: 'tools' },
@@ -332,10 +338,10 @@ export default function Portfolio() {
               </div>
 
               <div className="social-links">
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="GitHub">
+                <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="GitHub">
                   <GithubIcon size={20} />
                 </a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="LinkedIn">
+                <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="LinkedIn">
                   <LinkedinIcon size={20} />
                 </a>
               </div>
@@ -372,7 +378,7 @@ export default function Portfolio() {
               <div className="glass-card">
                 <h3 className="fs-4 fw-bold mb-3" style={{ color: 'var(--text-primary)' }}>Career Objective</h3>
                 <p className="mb-4">
-                  To secure a challenging position as a Software Engineer where I can utilize my technical skills in Python, software testing, and web development to contribute to organizational success while continuously learning and growing.
+                  Motivated and detail-oriented B.Tech graduate seeking an entry-level opportunity as a Frontend Developer. I have a foundation in HTML, CSS, JavaScript, and React.js, along with basic knowledge of Jira and software development practices. I am eager to apply my skills through real-world projects, learn new technologies, and contribute to building responsive and user-friendly web applications while growing professionally within a collaborative organization.
                 </p>
                 <p className="mb-4">
                   I enjoy solving complex problems through structural logic and writing clean automated test pipelines. I am highly collaborative, value version control integrity, and look forward to partnering with agile teams to build solid software solutions.
@@ -680,10 +686,10 @@ export default function Portfolio() {
               &copy; {new Date().getFullYear()} Pikkili Himadharani. All rights reserved.
             </p>
             <div className="d-flex gap-3">
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="social-icon-btn" style={{ width: '40px', height: '40px' }} aria-label="GitHub">
+              <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="social-icon-btn" style={{ width: '40px', height: '40px' }} aria-label="GitHub">
                 <GithubIcon size={16} />
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="social-icon-btn" style={{ width: '40px', height: '40px' }} aria-label="LinkedIn">
+              <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className="social-icon-btn" style={{ width: '40px', height: '40px' }} aria-label="LinkedIn">
                 <LinkedinIcon size={16} />
               </a>
             </div>

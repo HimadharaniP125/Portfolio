@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "id": 1,
+    "name": "Local API smoke test",
+    "email": "smoke@example.com",
+    "message": "Temporary validation record",
+    "createdAt": "2026-09-23T09:52:46.687Z"
+  }
+]

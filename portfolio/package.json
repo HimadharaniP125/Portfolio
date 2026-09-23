@@ -5,6 +5,7 @@
   "homepage": "https://HimadharaniP125.github.io/Portfolio",
   "scripts": {
     "dev": "vite",
+    "dev:api": "node server/dev-api.js",
     "build": "vite build",
     "preview": "vite preview",
     "vercel-build": "vite build",
